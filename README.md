@@ -1,4 +1,4 @@
-# Data Processing and Analysis Tool
+# Data Processing and Analysis Tool for Light On/Off and Occupancy Sensor Data
 
 ## Overview
 This is a simple GUI tool that enables users to load, process, and analyze CSV data files and export the results in JSON and CSV format along with graphs. It is implemented using Python with tkinter for the GUI and other libraries for data manipulation and plotting.
@@ -6,7 +6,7 @@ This is a simple GUI tool that enables users to load, process, and analyze CSV d
 The application contains two tabs: "Process Data" and "Analyze Data". 
 
 - The "Process Data" tab allows users to select a project directory, CSV files to process, and then process and export these files after entering additional information. 
-- The "Analyze Data" tab allows users to select and load a JSON file.
+- The "Analyze Data" tab allows users to select and load a JSON file. More functions will be implemented over time. 
 
 ## Features
 - Select a directory for project data and automatically create necessary subfolders.
@@ -45,11 +45,10 @@ You can also use the "Analyze Data" tab to select a JSON file for analysis. As o
 While the application already has useful functionality, there is room for improvement and further development. Some potential future features could include:
 
 - Implementing actual analysis of loaded JSON files.
-- Allowing users to configure the site number as well as other settings.
+- Automatic generation of reports
 - Adding more advanced data processing and analysis capabilities.
 - Refining the interface and user experience.
 
-Please feel free to contribute to the project! 
 
 ## License
 This project is open-source, feel free to use, distribute or contribute to this project.
