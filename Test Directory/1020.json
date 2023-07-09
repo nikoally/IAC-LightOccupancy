@@ -1,0 +1,14 @@
+{
+    "/Users/nicholasbailey/Documents/GitHub/Light-Occ/sampledata/testdata1.csv": {
+        "friendly_name": "Test 1",
+        "wattage": 100.0,
+        "total_time_light_on_no_occupancy": 682229.0,
+        "graph filepath": "graphs/Test 1.png"
+    },
+    "/Users/nicholasbailey/Documents/GitHub/Light-Occ/sampledata/testdata2.csv": {
+        "friendly_name": "Test 2",
+        "wattage": 50.0,
+        "total_time_light_on_no_occupancy": 686998.0,
+        "graph filepath": "graphs/Test 2.png"
+    }
+}

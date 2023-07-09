@@ -1,10 +1,8 @@
 import os
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog, simpledialog
-from tkinter import messagebox
+from tkinter import filedialog, simpledialog, messagebox, ttk
 from dateutil.parser import parse as parse_datetime
-from datetime import timedelta
+from datetime import timedelta, datetime
 import matplotlib.pyplot as plt
 import json
 import csv
@@ -61,6 +59,7 @@ class Application(ttk.Notebook):
 
     def load_directory(self):
         self.project_directory = filedialog.askdirectory()
+        self.site_number = simpledialog.askinteger("Input", f"Enter the site number:")
         for folder in ["graphs", "data"]:
             if not os.path.exists(f'{self.project_directory}/{folder}'):
                 os.makedirs(f'{self.project_directory}/{folder}')
@@ -89,7 +88,44 @@ class Application(ttk.Notebook):
         # print the output_dict to the console for verification
         print(self.output_dict)
 
+
+    
     def export_data(self):
+        def validate_date(date_str):
+            """Validate date string in the format YYYY-MM-DD HH:MM:SS."""
+            try:
+                return datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+            except ValueError:
+                return None
+        
+        #Get Start Time
+        root = tk.Tk()
+        root.withdraw()  # hide main window
+
+        start_time = None
+        while start_time is None:
+            # Use a simpledialog to get the date
+            date_str = simpledialog.askstring("Input", "Enter the start date/time in 'YYYY-MM-DD HH:MM:SS' format",
+                                            parent=root)
+
+            # Check if user clicked 'Cancel' or closed the dialog
+            if date_str is None:
+                print('No date was entered')
+                return None, None
+
+            start_time = validate_date(date_str)
+
+            if start_time is None:
+                tk.messagebox.showerror("Invalid input", "Please enter a valid date/time in 'YYYY-MM-DD HH:MM:SS' format")
+
+        # Calculate the end time by adding one week
+        end_time = start_time + timedelta(weeks=1)
+
+        # Close the Tkinter root window
+        root.destroy()
+
+
+        # Main Export Code
         for file, file_data in self.output_dict.items():
             # Read the csv file
             df = pd.read_csv(file, usecols=[0, 1, 2, 3])
@@ -115,6 +151,10 @@ class Application(ttk.Notebook):
             # Find the rows where Light is on (1.00) and Occupancy is off (0.00)
             df_light_on_no_occupancy = df[(df['Light'] == 1.00) & 
                                         (df['Occupancy'] == 0.00)]
+
+            # Trim the dataframe to start at the specified time and end exactly 1 week later
+            df_light_on_no_occupancy = df_light_on_no_occupancy.loc[start_time:end_time]
+
 
             # Calculate the time difference between consecutive timestamps
             df_light_on_no_occupancy.loc[:, 'Time Difference'] = df_light_on_no_occupancy.index.to_series().diff().dt.total_seconds()
@@ -146,7 +186,6 @@ class Application(ttk.Notebook):
         
         
         # Dump output_dict to JSON
-        self.site_number = simpledialog.askinteger("Input", f"Enter the site number:")
         with open(f'{self.project_directory}/{self.site_number}.json', 'w') as json_file:
             json.dump(self.output_dict, json_file, indent=4)
         print("Successful Export")
