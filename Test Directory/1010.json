@@ -1,0 +1,8 @@
+{
+    "/Users/nicholasbailey/Documents/GitHub/Light-Occ/sensordata/newdata.csv": {
+        "friendly_name": "New Data",
+        "wattage": 15.0,
+        "total_time_light_on_no_occupancy": 3825.0,
+        "graph filepath": "graphs/New Data.png"
+    }
+}
