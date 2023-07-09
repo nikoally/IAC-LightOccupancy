@@ -51,4 +51,4 @@ While the application already has useful functionality, there is room for improv
 
 
 ## License
-This project is open-source, feel free to use, distribute or contribute to this project.
+This project licensed under GNU GPLv3
